@@ -3,6 +3,7 @@ import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { ApiResponse } from '../../common/interfaces/api-response.interface';
 import { IComment } from './interfaces/comment.interface';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @Controller('comments')
 export class CommentsController {
@@ -19,12 +20,13 @@ export class CommentsController {
   }
 
   @Get()
+  @ApiQuery({ name: 'postId', required: false, description: 'ID ของบทความ (ถ้าไม่ใส่จะดึงทั้งหมด)' }) // 2. เพิ่มบรรทัดนี้
   findAll(@Query('postId') postId?: string): ApiResponse<IComment[]> {
     let data: IComment[];
     if (postId) {
       data = this.commentsService.findByPostId(postId); // กรองตาม Post
     } else {
-      data = this.commentsService.findAll();
+      data = this.commentsService.findAll(); // ดึงทั้งหมด
     }
     return {
       success: true,
