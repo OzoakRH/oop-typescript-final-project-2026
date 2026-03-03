@@ -28,3 +28,24 @@
 
 ## 3. Relationships
 * **One-to-Many (1:N)**: Post หนึ่งรายการ สามารถมีได้หลาย Comment
+
+## 4. Sample Data Structure (JSON)
+### Post Example
+```json
+{
+  "id": "1",
+  "title": "My First Blog",
+  "content": "Hello World!",
+  "author": "mark anuwuth",
+  "status": "DRAFT",
+  "createdAt": "2026-03-03T12:00:00Z"
+}
+
+### Comment Example
+{
+  "id": "101",
+  "postId": "1",
+  "author": "Msrkkyyyyy123",
+  "message": "Great post!",
+  "createdAt": "2026-03-03T13:00:00Z"
+}
