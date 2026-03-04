@@ -29,10 +29,10 @@ interface ApiResponse<T> {
 
 ## 3. Comment Endpoints (ความคิดเห็น)
 | Method | Endpoint | Description | Status Code |
-| :--- | :--- | :--- | :--- |
-| **GET** | `/comments` | ดึงคอมเมนต์ทั้งหมด | 200 |
-| **POST** | `/comments` | สร้างคอมเมนต์ใหม่ | 201 / 400 |
-| **DELETE** | `/comments/{id}` | ลบคอมเมนต์ | 200 / 404 |
+|--------|----------|------------|-------------|
+| GET | `/posts/{postId}/comments` | ดึงคอมเมนต์ทั้งหมดของโพสต์ | 200 |
+| POST | `/posts/{postId}/comments` | สร้างคอมเมนต์ให้โพสต์ | 201 / 400 |
+| DELETE | `/comments/{id}` | ลบคอมเมนต์ตาม ID | 200 / 404 |
 
 ## 4. Error Handling
 * **400 Bad Request**: ข้อมูลไม่ผ่านการ Validate
