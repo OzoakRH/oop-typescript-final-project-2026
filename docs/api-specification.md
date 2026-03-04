@@ -16,7 +16,6 @@ interface ApiResponse<T> {
 }
 ```
 
-
 ## 2. Post Endpoints (บทความ)
 | Method | Endpoint | Description | Status Code |
 | :--- | :--- | :--- | :--- |
