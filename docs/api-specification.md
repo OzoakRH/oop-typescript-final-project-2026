@@ -36,4 +36,5 @@ interface ApiResponse<T> {
 
 ## 4. Error Handling
 * **400 Bad Request**: ข้อมูลไม่ผ่านการ Validate
-* **404 Not Found**: ไม่พบ ID ที่ระบุในระบบ
+* **404 Not Found**: ไม่พบ Resource ที่ระบุในระบบ
+* **500 Internal Server Error**: เกิดข้อผิดพลาดภายในระบบ
