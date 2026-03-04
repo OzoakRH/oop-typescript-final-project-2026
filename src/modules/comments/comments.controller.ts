@@ -5,6 +5,7 @@ import { ApiResponse } from '../../common/interfaces/api-response.interface';
 import { IComment } from './interfaces/comment.interface';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Comments')
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
