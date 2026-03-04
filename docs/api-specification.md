@@ -14,6 +14,8 @@ interface ApiResponse<T> {
   message: string;   // ข้อความอธิบายผลลัพธ์
   data: T | null;    // ข้อมูลที่ส่งกลับ (ห้ามใช้ any)
 }
+```
+
 
 ## 2. Post Endpoints (บทความ)
 | Method | Endpoint | Description | Status Code |
