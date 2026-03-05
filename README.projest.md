@@ -79,25 +79,3 @@ npm run test:e2e
 * **400 Bad Request:** เมื่อข้อมูลที่ส่งมาไม่ผ่าน Validation (เช่น ลืมใส่ Title)
 * **404 Not Found:** เมื่อพยายามดึงข้อมูล Post หรือ Comment ที่ไม่มีอยู่ในระบบ
 * **Standard Response:** ทุก Error จะถูกส่งกลับในรูปแบบ `ApiResponse` ที่มี `success: false` เสมอ
-
-
-### สมาชิกในกลุ่ม 
-```json
-    {
-      "name": "Sirapop Jaroenkun",
-      "username": "OzoakRH",
-      "studentId": "68011136",
-      
-      "fullname2": "Supalerk Pleanpan",
-      "username2": "68011101-supalerk",
-      "studentId2": "68011101",
-
-      "fullname3": "Anuwuth Chotampaikorn",
-      "username3": "Msrkyyyyy123",
-      "studentId3": "68011223",
-
-      "fullname4": "Channarong Nakkhantong",
-      "username4": "Channarong",
-      "studentId4": "68010241"
-    }
-```
