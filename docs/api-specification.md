@@ -75,13 +75,15 @@ Request Body:
 * **400 Bad Request**: ข้อมูลไม่ผ่านการ Validate
 * **404 Not Found**: ไม่พบ Resource ที่ระบุในระบบ
 * **500 Internal Server Error**: เกิดข้อผิดพลาดภายในระบบ
+
 // Example: 400 Bad Request
+```Json
 {
   "success": false,
   "message": "Validation failed: title must be longer than or equal to 5 characters",
   "data": null
 }
-
+```
 
 ## 5. Summary of Data Types (Strictly No any)
 เพื่อให้เป็นไปตามข้อกำหนด **Narrow Type** ทุก Endpoint จะใช้ Interface ดังนี้:
