@@ -11,7 +11,7 @@
 ### 📄 Post (บทความ)
 | Attribute | Type | Constraints |
 | :--- | :--- | :--- |
-| `id` | `string` | Primary Key, Unique Identifier |
+| `id` | `string` | Primary Key, Unique Identifier (Timestamp-based) |
 | `title` | `string` | Min 5 chars, Required |
 | `content` | `string` | Required |
 | `author` | `string` | Required |
@@ -25,15 +25,16 @@
 | `id` | `string` | Primary Key, Unique Identifier |
 | `postId` | `string` | Foreign Key (Links to Post.id), Required |
 | `author` | `string` | Required |
-| `message` | `string` | Required |
+| `message` | `string` | Required, Max 500 chars |
 | `createdAt` | `Date` | Auto-generated Timestamp |
+| `updatedAt` | `Date` | Updated when message is edited |
 
 ## 3. Relationships
-* **One-to-Many (1:N)**: Post หนึ่งรายการ สามารถมีได้หลาย Comment (สังเกตจาก `postId` ใน Comment)
+* **One-to-Many (1:N)**: Post หนึ่งรายการ สามารถมีได้หลาย Comment
 * **Post (1) ↔ Comment (N)**: 
     - หนึ่งบทความสามารถมีความคิดเห็นได้หลายรายการ
-    - เมื่อมีการดึงข้อมูล Post ระบบสามารถ Filter หา Comment ที่มี `postId` ตรงกันได้
-    - **Cascade Action**: หากลบ Post, ระบบควรพิจารณาการจัดการ Comment ที่เกี่ยวข้อง (เช่น ลบทิ้งทั้งหมด)
+    - การดึงข้อมูล: สามารถ Filter Comment ตาม `postId` ได้ผ่าน Query Parameter
+    - **Cascade Action**: หากมีการลบ Post, ระบบจะทำการลบ Comment ที่เกี่ยวข้องทั้งหมดเพื่อรักษา Integrity
 
 ---
 
@@ -60,10 +61,10 @@
   "createdAt": "2026-03-03T13:00:00Z"
 }
 ```
-## 5. Data Validation Rules
-* **Post**: 
-    - `title`: ห้ามว่าง และต้องมีความยาวอย่างน้อย 5 ตัวอักษร
-    - `status`: ต้องเป็นค่าที่กำหนดใน `PostStatus` เท่านั้น
-* **Comment**:
-    - `postId`: ต้องเป็น ID ที่มีอยู่จริงในระบบ (Referential Integrity)
-    - `message`: ห้ามเป็นค่าว่าง
+## 4. Data Validation Rules (DTO Layer)
+* **Post Validation**:
+    - `title`: ใช้ `@MinLength(5)` และ `@IsNotEmpty()`
+    - `status`: ใช้ `@IsEnum(PostStatus)` เพื่อคุมค่าข้อมูล
+* **Comment Validation**:
+    - `postId`: ต้องเป็นค่า String ที่ไม่ว่างเปล่า
+    - `message`: ใช้ `@IsString()` และต้องไม่เป็นค่าว่าง
