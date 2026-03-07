@@ -1,4 +1,4 @@
-# 🚀 Blog / Content Platform API — Final Project
+# 🚀 Blog / Content Platform API — Final Project 2026
 ระบบ API สำหรับจัดการเนื้อหาบทความและความคิดเห็น พัฒนาด้วย NestJS และ TypeScript โดยเน้นการออกแบบตามหลัก Object-Oriented Programming (OOP) และการจัดการข้อมูลแบบ Type-safe
 
 ## 📌 Project Overview
@@ -7,15 +7,16 @@
 ---
 
 ## 🧩 Model Set Selection (การเลือกโมเดล)
+การเลือกหัวข้อโครงงานอ้างอิงจากผลรวมรหัสนักศึกษาตามเกณฑ์ที่กำหนด:
+* **Sum Student ID:** `272043701`
+* **Selection Logic:** `272043701 mod 10 = 1`
 * **Model Set ID:** `1` (Blog / Content Platform)
 * **Core Models:** `Post` (บทความ) และ `Comment` (ความคิดเห็น)
-* **Sum Student ID:** `272043701`
-* **Selection Logic:** `(Sum Student ID = 272043701) mod 10 = 1`
 
 ---
 
 ## 📄 Documentation (ลิงก์เอกสารประกอบ)
-เราได้จัดทำเอกสารไว้อย่างละเอียดเพื่อให้ง่ายต่อการตรวจสอบและพัฒนาต่อ:
+รายละเอียดเชิงลึกของระบบสามารถศึกษาได้จากเอกสารในโฟลเดอร์ `docs/`:
 * 🧱 **[Data Model Documentation](docs/data-model.md)**: รายละเอียดโครงสร้าง Table, Enum และความสัมพันธ์ 1:N
 * 🔌 **[API Specification](docs/api-specification.md)**: รายละเอียด Endpoint ทั้งหมด, Request Body และ Response Format
 * 📊 **[UML Diagram](docs/uml-diagram.png)**: แผนผังความสัมพันธ์ (Entity Relationship Diagram)
@@ -26,7 +27,7 @@
 เพื่อให้ระบบมีประสิทธิภาพและดูแลรักษาง่าย เราเลือกใช้เทคโนโลยีดังนี้:
 * **Framework:** `NestJS v10+` (Modular Architecture)
 * **Language:** `TypeScript 5+` (Strict Mode - **Strictly No `any` type**)
-* **Data Storage:** `In-memory Array` (จัดการข้อมูลผ่าน Service Logic)
+* **Data Storage:** `In-memory Array` (จัดการข้อมูลผ่าน Service Logic พร้อมรองรับการขยายเป็น Database ในอนาคต)
 * **API Documentation:** `Swagger (OpenAPI 3.0)`
 * **Validation:** `class-validator` & `class-transformer` สำหรับตรวจสอบความถูกต้องของข้อมูล (Data Integrity)
 
@@ -74,8 +75,17 @@ npm run test
 npm run test:e2e
 ```
 
-## ⚠️ Error Handling Logic
+## ⚠️ Error Handling Logic & Standard Response 
 ระบบมีการจัดการข้อผิดพลาดตามมาตรฐาน NestJS Exception Filters:
 * **400 Bad Request:** เมื่อข้อมูลที่ส่งมาไม่ผ่าน Validation (เช่น ลืมใส่ Title)
 * **404 Not Found:** เมื่อพยายามดึงข้อมูล Post หรือ Comment ที่ไม่มีอยู่ในระบบ
 * **Standard Response:** ทุก Error จะถูกส่งกลับในรูปแบบ `ApiResponse` ที่มี `success: false` เสมอ
+
+Success Response:
+```Json
+{
+  "success": true,
+  "message": "ข้อความอธิบายผลลัพธ์",
+  "data": { ... } // ข้อมูลจริง (Strictly Typed)
+}
+```
