@@ -57,17 +57,35 @@ Success Response (201 Created):
 ## 3. Comment Endpoints (ความคิดเห็น)
 | Method | Endpoint | Description | Status Code |
 |--------|----------|------------|-------------|
-| GET | `/comments/postId={id}` | ดึงคอมเมนต์ทั้งหมดของโพสต์นั้น | 200 OK |
+| GET | `/comments?postId={id}` | ดึงคอมเมนต์ทั้งหมดของโพสต์นั้น | 200 OK |
+| GET | `/comments/{id}` | ดึงรายละเอียดคอมเมนต์หลายตัว | 200 / 404 |
 | POST | `/comments` | สร้างความคิดเห็นใหม่ให้โพสต์ | 201 / 400 |
+| PATCH | `/comments/{id}` | แก้ไขข้อความในคอมเมนต์ | 200 / 404 |
 | DELETE | `/comments/{id}` | ลบคอมเมนต์ตาม ID | 200 / 404 |
 
 # 📝 ตัวอย่าง: การสร้างคอมเมนต์ (POST /comments)
 Request Body:
-```Json
+```json
 {
   "postId": "1741132800000",
   "author": "Msrkkyyyyy123",
   "message": "บทความนี้มีประโยชน์มากครับ!"
+}
+```
+
+Success Response (201 Created):
+```Json
+{
+  "success": true,
+  "message": "สร้างคอมเมนต์สำเร็จ",
+  "data": {
+    "id": "1741132800999",
+    "postId": "1741132800000",
+    "author": "Msrkkyyyyy123",
+    "message": "บทความนี้มีประโยชน์มากครับ!",
+    "createdAt": "2026-03-05T08:05:00.000Z",
+    "updatedAt": "2026-03-05T08:05:00.000Z" 
+  }
 }
 ```
 
