@@ -65,6 +65,13 @@ src/
 └── main.ts                             # จุดเริ่มต้นระบบ (Bootstrap & Swagger Config)
 ```
 
+## 🚀 Getting Started (วิธีการใช้งาน)
+
+### 1. การติดตั้ง (Installation)
+```bash
+# ติดตั้ง dependencies ทั้งหมด
+npm install
+
 ### การทดสอบระบบ (Testing)
 รัน Unit Test เพื่อตรวจสอบความถูกต้องของ Logic:
 ```bash
@@ -89,3 +96,12 @@ Success Response:
   "data": { ... } // ข้อมูลจริง (Strictly Typed)
 }
 ```
+
+## 👥 Contributors (สมาชิกในกลุ่ม)
+รหัสนักศึกษา 68011136: นาย Sirapop Jaroenkun (GitHub: @OzoakRH) - Team Leader
+
+รหัสนักศึกษา 68011101: นาย  Supalerk Pleanpan (GitHub: @68011101-supalerk)
+
+รหัสนักศึกษา 68011223: นาย Anuwuth Chotampaikorn (GitHub: @Msrkyyyyy123)
+
+รหัสนักศึกษา 68010241: นาย Channarong Nakkhantong (GitHub: @Channarong)
