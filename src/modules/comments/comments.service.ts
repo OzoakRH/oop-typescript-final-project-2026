@@ -1,10 +1,30 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { IComment } from './interfaces/comment.interface';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Injectable()
 export class CommentsService {
   private comments: IComment[] = []; // ห้ามใช้ any
+
+  // เพิ่มฟังก์ชันเหล่านี้เข้าไปใน Class
+
+findOne(id: string): IComment {
+  const comment = this.comments.find(c => c.id === id);
+  if (!comment) throw new NotFoundException(`ไม่พบคอมเมนต์ ID: ${id}`);
+  return comment;
+}
+
+patch(id: string, dto: UpdateCommentDto): IComment {
+  const index = this.comments.findIndex(c => c.id === id);
+  if (index === -1) throw new NotFoundException('ไม่พบข้อมูลที่จะแก้ไข');
+  
+  this.comments[index] = {
+    ...this.comments[index],
+    ...dto, // อัปเดตเฉพาะ message
+  };
+  return this.comments[index];
+}
 
   // ดึงคอมเมนต์ทั้งหมด
   findAll(): IComment[] {
