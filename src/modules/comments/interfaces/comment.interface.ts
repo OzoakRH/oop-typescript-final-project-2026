@@ -4,4 +4,5 @@ export interface IComment {
   author: string;
   message: string;
   createdAt: Date;
+  updatedAt: Date;
 }

@@ -2,10 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { IPost } from './interfaces/post.interface';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostStatus } from './enums/post-status.enum';
+import { CommentsService } from '../comments/comments.service'; // ตรวจสอบ Path ให้ถูกต้องนะครับ
 
 @Injectable()
 export class PostsService {
   private posts: IPost[] = [];
+
+  // 1. Inject CommentsService เข้ามาใช้งาน
+  constructor(private readonly commentsService: CommentsService) {}
 
   // 1. ดึงทั้งหมด (GET /posts)
   findAll(): IPost[] {
@@ -40,8 +44,8 @@ export class PostsService {
     this.posts[index] = {
       ...this.posts[index],
       ...dto,
-      id: this.posts[index].id, //เป็นการล็อคไว้คล้ายๆกับ comment.service             
-      createdAt: this.posts[index].createdAt,
+      id: this.posts[index].id, // ล็อค ID เดิมไว้
+      createdAt: this.posts[index].createdAt, // ล็อควันที่สร้างเดิมไว้
       updatedAt: new Date(),
     };
     return this.posts[index];
@@ -55,7 +59,7 @@ export class PostsService {
     this.posts[index] = {
       ...this.posts[index],
       ...dto,
-      id: this.posts[index].id,              
+      id: this.posts[index].id,
       createdAt: this.posts[index].createdAt,
       updatedAt: new Date(),
     };
@@ -65,7 +69,12 @@ export class PostsService {
   // 6. ลบ (DELETE /posts/:id)
   remove(id: string): void {
     const index = this.posts.findIndex((p) => p.id === id);
-    if (index === -1) throw new NotFoundException('ไม่พบข้อมูลที่ต้องการลบ');
+    if (index === -1) throw new NotFoundException('ไม่พบข้อมูลที่จะลบ');
+    
+    // สั่งให้ CommentsService ลบคอมเมนต์ทั้งหมดที่ผูกกับ postId นี้
+    this.commentsService.removeByPostId(id);
+    
+    // ลบตัวบทความออกจาก Array
     this.posts.splice(index, 1);
   }
 }
