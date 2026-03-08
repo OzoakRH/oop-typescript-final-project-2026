@@ -22,6 +22,8 @@ patch(id: string, dto: UpdateCommentDto): IComment {
   this.comments[index] = {
     ...this.comments[index],
     ...dto, // อัปเดตเฉพาะ message
+    id: this.comments[index].id, //เป็นการล็อคไว้เพื่อความปลอดภัย
+    postId: this.comments[index].postId, //เป็นการล็อคไว้เหมือนกัน
   };
   return this.comments[index];
 }

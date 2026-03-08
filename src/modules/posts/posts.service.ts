@@ -40,6 +40,8 @@ export class PostsService {
     this.posts[index] = {
       ...this.posts[index],
       ...dto,
+      id: this.posts[index].id, //เป็นการล็อคไว้คล้ายๆกับ comment.service             
+      createdAt: this.posts[index].createdAt,
       updatedAt: new Date(),
     };
     return this.posts[index];
@@ -53,6 +55,8 @@ export class PostsService {
     this.posts[index] = {
       ...this.posts[index],
       ...dto,
+      id: this.posts[index].id,              
+      createdAt: this.posts[index].createdAt,
       updatedAt: new Date(),
     };
     return this.posts[index];
