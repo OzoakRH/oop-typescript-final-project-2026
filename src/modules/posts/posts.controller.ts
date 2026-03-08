@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, Patch, HttpStatus, HttpCode } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Delete, Put, Patch, HttpStatus, HttpCode, Query } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { ApiResponse } from '../../common/interfaces/api-response.interface';
@@ -11,13 +11,15 @@ import { UpdatePostDto } from './dto/update-post.dto';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  // แก้ไข @Get() ของ posts
   @Get()
-  @ApiOperation({ summary: 'ดึงบทความทั้งหมด' })
-  findAll(): ApiResponse<IPost[]> {
+  @ApiOperation({ summary: 'ดึงบทความทั้งหมด (รองรับการค้นหาตามชื่อผู้เขียน)' })
+  @ApiQuery({ name: 'author', required: false, description: 'ระบุชื่อผู้เขียนที่ต้องการค้นหา' })
+  findAll(@Query('author') author?: string): ApiResponse<IPost[]> {
     return {
       success: true,
-      message: 'ดึงข้อมูลบทความทั้งหมดสำเร็จ',
-      data: this.postsService.findAll(),
+      message: author ? `ผลการค้นหาผู้เขียน: ${author}` : 'ดึงข้อมูลบทความทั้งหมดสำเร็จ',
+      data: this.postsService.findAll(author), // ส่งค่า author ไปให้ Service
     };
   }
 

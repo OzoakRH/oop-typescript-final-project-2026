@@ -1,243 +1,117 @@
-# NestJS Backend API — Project Template
+# 🚀 Blog / Content Platform API — Final Project 2026
+ระบบ API สำหรับจัดการเนื้อหาบทความและความคิดเห็น พัฒนาด้วย NestJS และ TypeScript โดยเน้นการออกแบบตามหลัก Object-Oriented Programming (OOP) และการจัดการข้อมูลแบบ Type-safe
 
 ## 📌 Project Overview
-
-โปรเจคนี้เป็น **Template สำหรับ Class Project** ในรายวิชาการพัฒนา Backend ด้วย NestJS Framework
-
-**Repository:** [https://github.com/42bangkok-classroom/oop-typescript-final-project-2026](https://github.com/42bangkok-classroom/oop-typescript-final-project-2026)
-
-วัตถุประสงค์ของโปรเจคนี้คือให้นักศึกษาฝึก:
-
-* การออกแบบและพัฒนา REST API ตามมาตรฐาน
-* การใช้ TypeScript อย่างปลอดภัย (Type-safe)
-* การจัดการ Validation และ Error Handling
-* การจัดทำเอกสารระบบ (Documentation)
+โปรเจคนี้คือระบบ Backend สำหรับ Blog Platform ที่รองรับการจัดการเนื้อหา (Content Management) และการโต้ตอบผ่านความคิดเห็น (User Interaction) โดยออกแบบภายใต้แนวคิด **Object-Oriented Programming (OOP)** และมาตรฐาน **RESTful API**
 
 ---
 
-## 👥 Team Structure
-
-* ทำงานเป็นกลุ่ม กลุ่มละ **3–4 คน**
-* ระยะเวลาการพัฒนา **ประมาณ 2 สัปดาห์**
-* สมาชิกทุกคนต้องมี commit ใน repository
-* รายชื่อสมาชิกต้องถูกระบุไว้ใน `package.json` (key `contributors`)
-
----
-
-## 🛠 Technology Stack
-
-* **Framework:** NestJS
-* **Language:** TypeScript
-* **API Style:** REST API
-* **Database:** JSON-based (file-based หรือ in-memory)
-* **API Documentation:** Swagger (OpenAPI)
-* **Linting:** ESLint (TypeScript ESLint)
+## 🧩 Model Set Selection (การเลือกโมเดล)
+การเลือกหัวข้อโครงงานอ้างอิงจากผลรวมรหัสนักศึกษาตามเกณฑ์ที่กำหนด:
+* **Sum Student ID:** `272043701`
+* **Selection Logic:** `272043701 mod 10 = 1`
+* **Model Set ID:** `1` (Blog / Content Platform)
+* **Core Models:** `Post` (บทความ) และ `Comment` (ความคิดเห็น)
 
 ---
 
-## 📁 Project Structure
+## 📄 Documentation (ลิงก์เอกสารประกอบ)
+รายละเอียดเชิงลึกของระบบสามารถศึกษาได้จากเอกสารในโฟลเดอร์ `docs/`:
+* 🧱 **[Data Model Documentation](docs/data-model.md)**: รายละเอียดโครงสร้าง Table, Enum และความสัมพันธ์ 1:N
+* 🔌 **[API Specification](docs/api-specification.md)**: รายละเอียด Endpoint ทั้งหมด, Request Body และ Response Format
+* 📊 **[UML Diagram](docs/uml-diagram.png)**: แผนผังความสัมพันธ์ (Entity Relationship Diagram)
 
+---
+
+## 🛠 Technology Stack (เครื่องมือที่ใช้พัฒนา)
+เพื่อให้ระบบมีประสิทธิภาพและดูแลรักษาง่าย เราเลือกใช้เทคโนโลยีดังนี้:
+* **Framework:** `NestJS v10+` (Modular Architecture)
+* **Language:** `TypeScript 5+` (Strict Mode - **Strictly No `any` type**)
+* **Data Storage:** `In-memory Array` (จัดการข้อมูลผ่าน Service Logic พร้อมรองรับการขยายเป็น Database ในอนาคต)
+* **API Documentation:** `Swagger (OpenAPI 3.0)`
+* **Validation:** `class-validator` & `class-transformer` สำหรับตรวจสอบความถูกต้องของข้อมูล (Data Integrity)
+
+---
+
+## 📂 Project Structure (การจัดวางโครงสร้าง)
+โปรเจคถูกแบ่งออกเป็น Module ตามหลักการของ NestJS เพื่อความเป็นระเบียบ:
 ```text
-.
-├── src/
-│   ├── main.ts
-│   ├── app.module.ts
-│   │
-│   ├── modules/
-│   │   └── example/
-│   │       └── dto/
-│   │
-│   └── common/
+
+src/
+├── common/
+│   └── interfaces/
+│       └── api-response.interface.ts   # มาตรฐาน Response Format
+├── modules/
+│   ├── posts/                          # --- Module จัดการบทความ ---
+│   │   ├── dto/
+│   │   │   ├── create-post.dto.ts      # โครงสร้างรับข้อมูลสร้างโพสต์
+|   |   |   └── update-post.dto.ts      # สำหรับใช้ในการ อัปเดตข้อมูลโพสต์
+│   │   ├── enums/
+│   │   │   └── post-status.enum.ts     # กำหนดสถานะ DRAFT, PUBLISHED
+│   │   ├── interfaces/
+│   │   │   └── post.interface.ts       # กำหนด Schema ของ Post
+│   │   ├── posts.controller.ts         # จัดการ Route /posts
+│   │   ├── posts.module.ts             # รวบรวมองค์ประกอบของ Post
+│   │   └── posts.service.ts            # Business Logic ของบทความ
+│   └── comments/                       # --- Module จัดการความคิดเห็น ---
+│       ├── dto/
+│       │   ├── create-comment.dto.ts   # โครงสร้างรับข้อมูลคอมเมนต์
+|       |   └── update-comment.dto.ts   # สำหรับใช้ในการ อัปเดตข้อมูลความคิดเห็น
 │       ├── interfaces/
-│       └── utils/
-│
-├── docs/
-│   ├── api-specification.md
-│   ├── data-model.md
-│   └── uml-diagram.png
-├── subjects/
-│   ├── requirement.md
-│   ├── submission.md
-│   ├── evaluation.md
-│   └── models.md
-│
-├── package.json
-├── tsconfig.json
-└── README.md
+│       │   └── comment.interface.ts    # กำหนด Schema ของ Comment
+│       ├── comments.controller.ts      # จัดการ Route /comments
+│       ├── comments.module.ts          # รวบรวมองค์ประกอบของ Comment
+│       └── comments.service.ts         # Logic การผูกคอมเมนต์กับ postId
+├── app.module.ts                       # Module หลักที่รวมทุก Module เข้าด้วยกัน
+├── app.spec.ts                         # ไฟล์สำหรับ Unit Testing ระบบเบื้องต้น
+└── main.ts                             # จุดเริ่มต้นระบบ (Bootstrap & Swagger Config)
 ```
 
-> 📌 หมายเหตุ: 
-> * โครงสร้างอาจมีการปรับเพิ่มเติมได้ตามความเหมาะสม แต่ต้องยังคงความเป็นระเบียบและอ่านง่าย
-> * **แนะนำให้แยก module ตาม models** (เช่น `modules/users/`, `modules/products/`) เพื่อให้โค้ดเป็นระบบและดูแลรักษาง่าย
-> * แต่ละ module ควรมี controller, service, และ dto ของตัวเอง
+## 🔄 System Workflow & Logic
+1. **Validation Layer:** ทุก Request จะถูกตรวจสอบผ่าน Global ValidationPipe ใน `main.ts` เพื่อเช็ค Constraints ที่กำหนดไว้ใน DTO
+2. **Post Management:** บทความเริ่มต้นจะมีสถานะเป็น `DRAFT` และจะได้รับ `id` จาก Timestamp
+3. **Comment Relationship:** การสร้าง Comment จะต้องระบุ `postId` ที่มีอยู่จริง เพื่อเชื่อมโยงข้อมูลแบบ One-to-Many
+4. **Data Protection:** - การอัปเดต Post ใช้ `PartialType` เพื่อความยืดหยุ่น
+   - การอัปเดต Comment ใช้ `PickType` เพื่ออนุญาตให้แก้ไขได้เฉพาะ `message` เท่านั้น
 
----
 
-## 🚀 Getting Started
+## 🚀 Getting Started (วิธีการใช้งาน)
 
-### 1. Install Dependencies
-
+### 1. การติดตั้ง (Installation)
 ```bash
+# ติดตั้ง dependencies ทั้งหมด
 npm install
-```
 
-### 2. Run Development Server
-
+### การทดสอบระบบ (Testing)
+รัน Unit Test เพื่อตรวจสอบความถูกต้องของ Logic:
 ```bash
-npm run start:dev
+# Unit Testing
+npm run test
+
+# End-to-End (e2e) Testing
+npm run test:e2e
 ```
 
-### 3. API Documentation (Swagger)
+## ⚠️ Error Handling Logic & Standard Response 
+ระบบมีการจัดการข้อผิดพลาดตามมาตรฐาน NestJS Exception Filters:
+* **400 Bad Request:** เมื่อข้อมูลที่ส่งมาไม่ผ่าน Validation (เช่น ลืมใส่ Title)
+* **404 Not Found:** เมื่อพยายามดึงข้อมูล Post หรือ Comment ที่ไม่มีอยู่ในระบบ
+* **Standard Response:** ทุก Error จะถูกส่งกลับในรูปแบบ `ApiResponse` ที่มี `success: false` เสมอ
 
-เมื่อรันโปรเจคแล้ว สามารถเข้าดู Swagger ได้ที่:
-
-```text
-http://localhost:3000/api
-```
-
----
-
-## 🧩 Model Sets
-
-แต่ละกลุ่มต้องเลือก **Model Set 1 ชุด** จาก 10 ชุดที่มีให้
-
-**วิธีการเลือก Model Set:**
-1. นำ Student ID ของสมาชิกทุกคนในกลุ่มมารวมกัน (`sumStudentId`)
-2. นำผลรวม mod 10
-3. ค่าที่ได้ (0-9) จะเป็น Model Set ID ที่กลุ่มได้รับ
-
-**ตัวอย่าง:** 
-- สมาชิก 3 คน มี Student ID: 64123456, 64123457, 64123458
-- `sumStudentId` = 64123456 + 64123457 + 64123458 = 192370371
-- 192370371 mod 10 = 1 → **Model Set ID: "1"** (Blog / Content Platform)
-
-> 📌 **เมื่อได้ Model Set แล้ว ห้ามเปลี่ยน** เว้นแต่ได้รับอนุญาตจากอาจารย์
-
-**หลังจากเลือก Model Set แล้ว ให้บันทึกใน `package.json`:**
-```json
+Success Response:
+```Json
 {
-  "project": {
-    "model": {
-      "id": "1",
-      "name": "Blog / Content Platform"
-    },
-    "sumStudentId": 192370371
-  }
+  "success": true,
+  "message": "ข้อความอธิบายผลลัพธ์",
+  "data": { ... } // ข้อมูลจริง (Strictly Typed)
 }
 ```
 
-**รายละเอียด Model Sets ทั้งหมด:** → [`subjects/models.md`](subjects/models.md)
+## 👥 Contributors (สมาชิกในกลุ่ม)
+รหัสนักศึกษา 68011136: นาย Sirapop Jaroenkun (GitHub: @OzoakRH) - Team Leader
 
----
+รหัสนักศึกษา 68011101: นาย  Supalerk Pleanpan (GitHub: @68011101-supalerk)
 
-## 📐 Project Requirements (Summary)
+รหัสนักศึกษา 68011223: นาย Anuwuth Chotampaikorn (GitHub: @Msrkyyyyy123)
 
-### Data Model
-* ต้องเลือกใช้ **Model Set 1 ชุด** จาก 10 ชุดที่มีให้ (ดูรายละเอียดใน [`subjects/models.md`](subjects/models.md))
-* แต่ละ Model Set มี **Core Data Model 2 Models**
-* ต้องบันทึก Model Set ที่เลือกไว้ใน `package.json` (key `project`)
-* ใช้ TypeScript data type ให้ครบถ้วน
-* ต้องมีการใช้งาน **Enum อย่างน้อย 1 จุด**
-* ❌ **ห้ามใช้ `any` type ในทุกกรณี**
-
-### API Design
-* ทุก Model ต้องรองรับ **CRUD Operation ครบถ้วน**
-* ใช้ HTTP Method ให้ถูกต้องตามหลัก REST API:
-  * `GET /resources` - ดึงข้อมูลทั้งหมด
-  * `GET /resources/{id}` - ดึงข้อมูลตาม ID
-  * `POST /resources` - สร้างข้อมูลใหม่
-  * `PUT /resources/{id}` - อัปเดตข้อมูลทั้งหมด
-  * `PATCH /resources/{id}` - อัปเดตข้อมูลบางส่วน
-  * `DELETE /resources/{id}` - ลบข้อมูล
-* URL path ต้องตั้งชื่อให้สื่อความหมาย
-
-### Standard Response Format
-
-ทุก API ต้องใช้ Response Format แบบเดียวกัน:
-
-```typescript
-interface ApiResponse<T> {
-  success: boolean;
-  message: string;
-  data: T | null;
-}
-```
-
-### Validation & Error Handling
-* ทุก API ต้องมีการ **validate ข้อมูล**
-* ใช้ **HTTP Status Code** ที่เหมาะสม:
-  * `200` - OK (GET, PUT, PATCH สำเร็จ)
-  * `201` - Created (POST สำเร็จ)
-  * `400` - Bad Request (Validation error)
-  * `403` - Forbidden (ไม่มีสิทธิ์)
-  * `404` - Not Found (ไม่พบข้อมูล)
-  * `500` - Internal Server Error (Server error)
-* ⚠️ **ไม่ควรเกิด Error 500 จาก logic ที่สามารถป้องกันได้**
-* หากพบ Error 500 มากกว่า 5 จุด อาจมีผลต่อการให้คะแนน
-
----
-
-## 📄 Documentation
-
-เอกสารรายละเอียดของโจทย์และข้อกำหนดทั้งหมดถูกจัดเก็บไว้ในโฟลเดอร์ `subjects/`
-
-### เอกสารโจทย์ (Project Specification)
-
-* 📘 **Project Requirement** — ขอบเขตและข้อกำหนดของโปรเจค
-  → [`subjects/requirement.md`](subjects/requirement.md)
-* 🧩 **Model Sets** — รายละเอียด Model Sets ทั้ง 10 ชุด
-  → [`subjects/models.md`](subjects/models.md)
-* 📦 **Submission Guideline** — รูปแบบและขั้นตอนการส่งงาน
-  → [`subjects/submission.md`](subjects/submission.md)
-* 🧮 **Evaluation Criteria** — เกณฑ์การให้คะแนนและการประเมินผล
-  → [`subjects/evaluation.md`](subjects/evaluation.md)
-
-### เอกสารทางเทคนิค (ต้องจัดทำ)
-
-* 🔌 **API Specification (Swagger)** — เอกสาร API ทุก Endpoint
-* 🧱 **Data Model Documentation** — เอกสารอธิบาย Data Model
-* 📊 **UML Diagram** — แผนภาพ UML ของ Data Model
-
----
-
-## 👥 Team & Contributors
-
-รายชื่อสมาชิกในกลุ่มต้องถูกระบุไว้ใน key `contributors` ภายในไฟล์ `package.json` โดยมีรูปแบบดังนี้:
-
-```json
-"contributors": [
-  {
-    "fullname": "ชื่อ-นามสกุล",
-    "username": "github-username",
-    "studentId": "รหัสนักศึกษา"
-  }
-]
-```
-
----
-
-## 🤖 AI Usage Policy
-
-* อนุญาตให้ใช้ AI (เช่น ChatGPT) ช่วยในการพัฒนาโปรเจค
-* นักศึกษาต้องสามารถอธิบายโค้ดและแนวคิดของระบบได้ด้วยตนเอง
-* หากไม่สามารถอธิบายได้ อาจมีผลต่อการประเมินคะแนน
-
----
-
-## ✅ Submission
-
-* ส่งงานเป็น **GitHub Repository URL** ในนามของ **Team Lead**
-* Repository ต้องสามารถเข้าถึงได้
-
----
-
-## 📝 Important Notes
-
-* โค้ดต้องอ่านง่าย เป็นระบบ และดูแลรักษาได้
-* ทุก request และ response ต้องกำหนด interface แบบ narrow type
-* ใช้ TypeScript strict mode (`strict: true` ใน tsconfig.json)
-* ESLint จะตรวจสอบและป้องกันการใช้ `any` type อัตโนมัติ
-
----
-
-📌 *This repository is intended for educational purposes only.*
+รหัสนักศึกษา 68010241: นาย Channarong Nakkhantong (GitHub: @Channarong)

@@ -11,10 +11,15 @@ export class PostsService {
   // 1. Inject CommentsService เข้ามาใช้งาน
   constructor(private readonly commentsService: CommentsService) {}
 
-  // 1. ดึงทั้งหมด (GET /posts)
-  findAll(): IPost[] {
-    return this.posts;
+  findAll(author?: string): IPost[] {
+  if (author) {
+    // กรองหาบทความที่ชื่อผู้เขียนตรงกับที่ส่งมา (รองรับ Case-insensitive)
+    return this.posts.filter(post => 
+      post.author.toLowerCase().includes(author.toLowerCase())
+    );
   }
+  return this.posts;
+}
 
   // 2. ดึงตาม ID (GET /posts/:id)
   findOne(id: string): IPost {

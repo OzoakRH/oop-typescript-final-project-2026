@@ -19,12 +19,22 @@ interface ApiResponse<T> {
 ## 2. Post Endpoints (การจัดการบทความ)
 | Method | Endpoint | Description | Status Code |
 | :--- | :--- | :--- | :--- |
-| **GET** | `/posts` | ดึงบทความทั้งหมดในระบบ | 200 OK |
+| **GET** | `/posts?author={name}` | ดึงบทความทั้งหมด (รองรับการกรองตามชื่อผู้เขียน) | 200 OK |
 | **GET** | `/posts/{id}` | ดึงบทความตาม ID | 200 / 404 |
 | **POST** | `/posts` | สร้างบทความใหม่ | 201 / 400 |
 | **PUT** | `/posts/{id}` | อัปเดตข้อมูลบทความทั้งหมด | 200 / 404 |
 | **PATCH** | `/posts/{id}` | อัปเดตบทความ (บางส่วน) | 200 / 404 |
 | **DELETE** | `/posts/{id}` | ลบบทความ | 200 / 404 |
+
+# 📝 ตัวอย่าง: การค้นหาบทความตามชื่อผู้เขียน (GET /posts?author=Mark)
+Success Response (200 OK):
+```Json
+{
+  "success": true,
+  "message": "ผลการค้นหาผู้เขียน: Mark",
+  "data": [ { "id": "...", "author": "Mark Anuwuth", ... } ]
+}
+```
 
 # 📝 ตัวอย่าง: การสร้างบทความ (POST /posts)
 Request Body: 
