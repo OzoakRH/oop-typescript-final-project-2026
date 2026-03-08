@@ -44,7 +44,8 @@ src/
 ├── modules/
 │   ├── posts/                          # --- Module จัดการบทความ ---
 │   │   ├── dto/
-│   │   │   └── create-post.dto.ts      # โครงสร้างรับข้อมูลสร้างโพสต์
+│   │   │   ├── create-post.dto.ts      # โครงสร้างรับข้อมูลสร้างโพสต์
+|   |   |   └── update-post.dto.ts      # สำหรับใช้ในการ อัปเดตข้อมูลโพสต์
 │   │   ├── enums/
 │   │   │   └── post-status.enum.ts     # กำหนดสถานะ DRAFT, PUBLISHED
 │   │   ├── interfaces/
@@ -54,7 +55,8 @@ src/
 │   │   └── posts.service.ts            # Business Logic ของบทความ
 │   └── comments/                       # --- Module จัดการความคิดเห็น ---
 │       ├── dto/
-│       │   └── create-comment.dto.ts   # โครงสร้างรับข้อมูลคอมเมนต์
+│       │   ├── create-comment.dto.ts   # โครงสร้างรับข้อมูลคอมเมนต์
+|       |   └── update-comment.dto.ts   # สำหรับใช้ในการ อัปเดตข้อมูลความคิดเห็น
 │       ├── interfaces/
 │       │   └── comment.interface.ts    # กำหนด Schema ของ Comment
 │       ├── comments.controller.ts      # จัดการ Route /comments
@@ -64,6 +66,14 @@ src/
 ├── app.spec.ts                         # ไฟล์สำหรับ Unit Testing ระบบเบื้องต้น
 └── main.ts                             # จุดเริ่มต้นระบบ (Bootstrap & Swagger Config)
 ```
+
+## 🔄 System Workflow & Logic
+1. **Validation Layer:** ทุก Request จะถูกตรวจสอบผ่าน Global ValidationPipe ใน `main.ts` เพื่อเช็ค Constraints ที่กำหนดไว้ใน DTO
+2. **Post Management:** บทความเริ่มต้นจะมีสถานะเป็น `DRAFT` และจะได้รับ `id` จาก Timestamp
+3. **Comment Relationship:** การสร้าง Comment จะต้องระบุ `postId` ที่มีอยู่จริง เพื่อเชื่อมโยงข้อมูลแบบ One-to-Many
+4. **Data Protection:** - การอัปเดต Post ใช้ `PartialType` เพื่อความยืดหยุ่น
+   - การอัปเดต Comment ใช้ `PickType` เพื่ออนุญาตให้แก้ไขได้เฉพาะ `message` เท่านั้น
+
 
 ## 🚀 Getting Started (วิธีการใช้งาน)
 
