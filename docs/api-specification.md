@@ -94,12 +94,21 @@ Success Response (201 Created):
 * **404 Not Found**: ไม่พบ Resource ที่ระบุในระบบ
 * **500 Internal Server Error**: เกิดข้อผิดพลาดภายในระบบ
 
+
 // Example: 400 Bad Request
 ```Json
 {
   "success": false,
   "message": "Validation failed: title must be longer than or equal to 5 characters",
   "data": null
+}
+```
+
+// Example: การแก้ไขข้อความคอมเมนต์ (PATCH /comments/{id})
+Request Body:
+```json
+{
+  "message": "ข้อความที่แก้ไขใหม่ครับ!"
 }
 ```
 
